@@ -253,7 +253,7 @@ function initPlayer(id, handle, options) {
 				}
 
 				if (media.youTubeApi) {
-					player.youTubeApi.setPlaybackQuality('small')
+					media.youTubeApi.setPlaybackQuality('small')
 					options.title = media.youTubeApi.getVideoData().title;
 
 					media.videoTracks = {length: 1};
