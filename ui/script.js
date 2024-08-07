@@ -200,8 +200,25 @@ function hideLoadingIcon() {
 	document.getElementById('loading').style.display = 'none';
 }
 
+function morphYouTubeUrl(originalUrl) {
+    const videoIdMatch = originalUrl.match(/[?&]v=([^&]+)/);
+
+    if (videoIdMatch && videoIdMatch[1]) {
+        const videoId = videoIdMatch[1];
+
+        const newUrl = `https://www.youtube.com/embed/${videoId}?controls=0&rel=0&disablekb=1&showinfo=0&modestbranding=0&html5=1&iv_load_policy=3&autoplay=0&end=0&loop=0&playsinline=1&start=0&nocookie=false&enablejsapi=1&origin=https%3A%2F%2Fwww.mediaelementjs.com&widgetid=1`;
+
+        return newUrl;
+    } else {
+        throw new Error("Invalid YouTube URL");
+    }
+}
+
 function resolveUrl(url) {
 	if (url.startsWith('http://') || url.startsWith('https://')) {
+		if(url.includes('youtube.com')) {
+			url = morphYouTubeUrl(url);
+		}
 		return url;
 	} else {
 		return 'http://' + currentServerEndpoint + '/pmms/media/' + url;
