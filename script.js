@@ -191,10 +191,25 @@ function hideLoadingIcon() {
 	document.getElementById('loading').style.display = 'none';
 }
 
+function morphYouTubeUrl(originalUrl) {
+    const videoIdMatch = originalUrl.match(/[?&]v=([^&]+)/);
+
+    if (videoIdMatch && videoIdMatch[1]) {
+        const videoId = videoIdMatch[1];
+
+        const newUrl = `https://www.youtube.com/embed/${videoId}?controls=0&rel=0&disablekb=1&showinfo=0&modestbranding=0&html5=1&iv_load_policy=3&autoplay=0&end=0&loop=0&playsinline=1&start=0&nocookie=false&enablejsapi=1&origin=https%3A%2F%2Fwww.mediaelementjs.com&widgetid=1`;
+
+        return newUrl;
+    } else {
+        throw new Error("Invalid YouTube URL");
+    }
+}
+
 function initPlayer(id, handle, options) {
 	var player = document.createElement('video');
 	player.id = id;
-	player.src = options.url;
+	var url = morphYouTubeUrl(options.url)
+	player.src = url;
 	document.body.appendChild(player);
 
 	if (options.attenuation == null) {
@@ -206,7 +221,7 @@ function initPlayer(id, handle, options) {
 			hideLoadingIcon();
 
 			sendMessage('initError', {
-				url: options.url,
+				url: url,
 				message: media.error.message
 			});
 
@@ -226,7 +241,7 @@ function initPlayer(id, handle, options) {
 				hideLoadingIcon();
 
 				sendMessage('playError', {
-					url: options.url,
+					url: url,
 					message: media.error.message
 				});
 
