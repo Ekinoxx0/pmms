@@ -205,6 +205,7 @@ function morphYouTubeUrl(originalUrl) {
 
     if (videoIdMatch && videoIdMatch[1]) {
         const videoId = videoIdMatch[1];
+	    console.log('videoId', videoId)
 
         const newUrl = `https://www.youtube.com/embed/${videoId}?controls=0&rel=0&disablekb=1&showinfo=0&modestbranding=0&html5=1&iv_load_policy=3&autoplay=0&end=0&loop=0&playsinline=1&start=0&nocookie=false&enablejsapi=1&origin=https%3A%2F%2Fwww.mediaelementjs.com&widgetid=1`;
 
